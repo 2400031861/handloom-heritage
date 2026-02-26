@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f1ea;
+}
+
+h1 {
+  text-align: center;
+  background-color: #8b4513;
+  color: white;
+  padding: 15px;
+  margin: 0;
+}
+
+nav {
+  text-align: center;
+  padding: 10px;
+  background-color: #d2b48c;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+nav a:hover {
+  color: #8b4513;
+}
+
+div {
+  padding: 20px;
+}
