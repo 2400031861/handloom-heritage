@@ -12,56 +12,86 @@ function Home() {
           "url('https://png.pngtree.com/thumb_back/fw800/background/20250506/pngtree-national-handloom-day-background-design-image_17254763.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "'Playfair Display', serif",
       }}
     >
-      {/* Dark Overlay */}
+      {/* Elegant Gradient Overlay */}
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0,0,0,0.45)",  // 🔥 this fixes readability
+          inset: 0,
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.65), rgba(0,0,0,0.35))",
         }}
       ></div>
 
-      {/* Content */}
+      {/* Main Content */}
       <div
         style={{
           position: "relative",
           zIndex: 2,
           textAlign: "center",
-          paddingTop: "180px",
           color: "white",
+          maxWidth: "900px",
+          padding: "20px",
         }}
       >
-        <h2 style={{ fontSize: "42px", fontWeight: "bold" }}>
+        <h1
+          style={{
+            fontSize: "54px",
+            fontWeight: "700",
+            marginBottom: "20px",
+            letterSpacing: "1px",
+          }}
+        >
+          Handloom Heritage
+        </h1>
+
+        <h2
+          style={{
+            fontSize: "28px",
+            fontWeight: "400",
+            marginBottom: "25px",
+          }}
+        >
           Discover Authentic Indian Handloom
         </h2>
 
         <p
           style={{
             fontSize: "20px",
-            maxWidth: "700px",
-            margin: "20px auto",
+            lineHeight: "1.6",
+            marginBottom: "40px",
           }}
         >
           We connect traditional Indian artisans with global buyers.
-          Experience sustainable fashion crafted with heritage and elegance.
+          Experience sustainable fashion crafted with heritage,
+          culture, and timeless elegance.
         </p>
 
         <button
           onClick={() => navigate("/products")}
           style={{
-            padding: "14px 30px",
-            backgroundColor: "#8b4513",
-            color: "white",
+            padding: "16px 38px",
+            backgroundColor: "#d4af37",
+            color: "#000",
             border: "none",
             fontSize: "18px",
-            borderRadius: "8px",
+            borderRadius: "30px",
             cursor: "pointer",
+            fontWeight: "600",
+            transition: "0.3s ease",
           }}
+          onMouseOver={(e) =>
+            (e.target.style.backgroundColor = "#b8962e")
+          }
+          onMouseOut={(e) =>
+            (e.target.style.backgroundColor = "#d4af37")
+          }
         >
           Shop Now
         </button>

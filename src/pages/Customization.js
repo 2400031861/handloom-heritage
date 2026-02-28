@@ -2,26 +2,46 @@ import { useState } from "react";
 
 function Customization() {
   const [product, setProduct] = useState("");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#800000");
   const [pattern, setPattern] = useState("");
   const [embroidery, setEmbroidery] = useState("");
+  const [notes, setNotes] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
-  // Base price logic
-  const basePrice = 100;
-  const extraCharge = embroidery === "Heavy" ? 50 : embroidery === "Medium" ? 30 : 0;
-  const totalPrice = basePrice + extraCharge;
+  // 🔥 Dynamic base pricing
+  const productPrices = {
+    Kurti: 150,
+    Saree: 300,
+    "Diwan Set": 250,
+    Shirt: 120,
+  };
 
-  // Delivery estimation (10 days)
+  const basePrice = productPrices[product] || 0;
+
+  const embroideryCharge =
+    embroidery === "Heavy"
+      ? 70
+      : embroidery === "Medium"
+      ? 40
+      : embroidery === "Light"
+      ? 20
+      : 0;
+
+  const totalPrice = basePrice + embroideryCharge;
+
+  // 📦 Delivery (10 days)
   const today = new Date();
   const deliveryDate = new Date(today);
   deliveryDate.setDate(today.getDate() + 10);
 
   const handleSubmit = () => {
-    if (!product || !color || !pattern) {
-      alert("Please select all required fields");
+    if (!product || !pattern) {
+      setError("Please fill all required fields");
       return;
     }
+
+    setError("");
     setSubmitted(true);
   };
 
@@ -29,79 +49,105 @@ function Customization() {
     <div
       style={{
         minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f5f1e8",
         padding: "40px",
-        textAlign: "center",
-        backgroundImage:
-          "url('https://png.pngtree.com/thumb_back/fw800/background/20250506/pngtree-national-handloom-day-background-design-image_17254763.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
       <div
         style={{
-          backgroundColor: "rgba(255,255,255,0.9)",
-          padding: "30px",
-          maxWidth: "500px",
-          margin: "auto",
-          borderRadius: "15px",
+          background: "white",
+          padding: "35px",
+          width: "450px",
+          borderRadius: "20px",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
         }}
       >
-        <h2>Customize Your Handloom Product</h2>
+        <h2 style={{ textAlign: "center", color: "#8b4513" }}>
+          Customize Your Handloom
+        </h2>
 
+        {/* PRODUCT */}
         <select value={product} onChange={(e) => setProduct(e.target.value)} style={inputStyle}>
-          <option value="">Select Product</option>
+          <option value="">Select Product *</option>
           <option>Kurti</option>
           <option>Saree</option>
           <option>Diwan Set</option>
           <option>Shirt</option>
         </select>
 
-        <select value={color} onChange={(e) => setColor(e.target.value)} style={inputStyle}>
-          <option value="">Select Colour</option>
-          <option>Red</option>
-          <option>Blue</option>
-          <option>Green</option>
-          <option>Maroon</option>
-        </select>
+        {/* COLOR PICKER */}
+        <label style={{ fontSize: "14px" }}>Choose Colour</label>
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+          style={{ ...inputStyle, height: "40px", padding: "3px" }}
+        />
 
+        {/* PATTERN */}
         <select value={pattern} onChange={(e) => setPattern(e.target.value)} style={inputStyle}>
-          <option value="">Select Pattern</option>
+          <option value="">Select Pattern *</option>
           <option>Traditional</option>
           <option>Floral</option>
           <option>Modern</option>
           <option>Ikat</option>
         </select>
 
-        <select value={embroidery} onChange={(e) => setEmbroidery(e.target.value)} style={inputStyle}>
-          <option value="">Embroidery Type</option>
-          <option>Light</option>
-          <option>Medium</option>
-          <option>Heavy</option>
-        </select>
+        {/* EMBROIDERY BUTTON STYLE */}
+        <div style={{ marginBottom: "15px" }}>
+          <p style={{ marginBottom: "5px" }}>Embroidery Type</p>
+          {["Light", "Medium", "Heavy"].map((type) => (
+            <button
+              key={type}
+              onClick={() => setEmbroidery(type)}
+              style={{
+                marginRight: "10px",
+                padding: "6px 12px",
+                borderRadius: "20px",
+                border: embroidery === type ? "2px solid #d4af37" : "1px solid #ccc",
+                backgroundColor: embroidery === type ? "#d4af37" : "white",
+                cursor: "pointer",
+              }}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
 
+        {/* FILE UPLOAD */}
         <input type="file" style={inputStyle} />
 
-        <textarea
+        {/* NOTES */}
+        <input
+          type="text"
           placeholder="Other requirements..."
-          style={{
-            ...inputStyle,
-            height: "60px",
-            resize: "none",
-          }}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          style={inputStyle}
         />
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <button onClick={handleSubmit} style={buttonStyle}>
           Submit Customization
         </button>
 
+        {/* SUCCESS MESSAGE */}
         {submitted && (
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px", textAlign: "center" }}>
             <h3 style={{ color: "green" }}>
-              Customization Request Submitted Successfully 💖
+              Customization Request Submitted 💛
             </h3>
-            <p>Total Price: ${totalPrice}</p>
-            <p>Expected Delivery: {deliveryDate.toDateString()}</p>
-            <p>Thank you for supporting Indian artisans 🌸</p>
+            <p><strong>Total Price:</strong> ${totalPrice}</p>
+            <p>
+              <strong>Expected Delivery:</strong> {deliveryDate.toDateString()}
+            </p>
+            <p style={{ fontStyle: "italic", marginTop: "10px" }}>
+              Your handcrafted piece is being specially woven with care by our artisans ✨
+            </p>
           </div>
         )}
       </div>
@@ -111,7 +157,7 @@ function Customization() {
 
 const inputStyle = {
   width: "100%",
-  padding: "10px",
+  padding: "8px",
   margin: "10px 0",
   borderRadius: "8px",
   border: "1px solid #ccc",
@@ -120,11 +166,12 @@ const inputStyle = {
 const buttonStyle = {
   width: "100%",
   padding: "12px",
-  backgroundColor: "#8b4513",
-  color: "white",
+  backgroundColor: "#d4af37",
   border: "none",
-  borderRadius: "8px",
+  borderRadius: "25px",
   cursor: "pointer",
+  fontWeight: "600",
+  marginTop: "10px",
 };
 
 export default Customization;

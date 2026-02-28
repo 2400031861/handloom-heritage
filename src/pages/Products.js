@@ -45,55 +45,53 @@ import shirt2 from "../images/shirt2.jpg";
 import shirt3 from "../images/shirt3.jpg";
 
 function Products({ addToCart, initialType = "All" }) {
-
   const navigate = useNavigate();
-
   const [selectedType, setSelectedType] = useState(initialType);
   const [search, setSearch] = useState("");
   const [selectedOptions, setSelectedOptions] = useState({});
 
   const products = [
     { name: "Banarasi Saree Classic", price: 120, image: banarasi1, type: "Banarasi" },
-    { name: "Banarasi Bridal Saree", price: 250, image: banarasi2, type: "Banarasi" },
-    { name: "Banarasi Saree", price: 120, image: banarasi3, type: "Banarasi" },
-     { name: "Banarasi Bridal", price: 250, image: banarasi4, type: "Banarasi" },
-    { name: "Kanchipuram Silk Traditional", price: 150, image: kanchipuram1, type: "Kanchipuram" },
-    { name: "Kanchipuram Wedding Special", price: 400, image: kanchipuram2, type: "Kanchipuram" },
-    { name: "Pochampally Ikat Dupatta", price: 40, image: pochampally1, type: "Pochampally" },
+    { name: "Banarasi Bridal Saree", price: 2500, image: banarasi2, type: "Banarasi" },
+    { name: "Banarasi Saree", price: 1200, image: banarasi3, type: "Banarasi" },
+    { name: "Banarasi Bridal", price: 2500, image: banarasi4, type: "Banarasi" },
+    { name: "Kanchipuram Silk Traditional", price: 1500, image: kanchipuram1, type: "Kanchipuram" },
+    { name: "Kanchipuram Wedding Special", price: 4000, image: kanchipuram2, type: "Kanchipuram" },
+    { name: "Pochampally Ikat Dupatta", price: 4000, image: pochampally1, type: "Pochampally" },
     { name: "Pochampally Designer Ikat", price: 900, image: pochampally2, type: "Pochampally" },
-    { name: "Handloom Cotton Kurti", price: 60, image: kurti1, type: "Kurti" },
-    { name: "Block Print Handloom Kurti", price: 75, image: kurti2, type: "Kurti" },
-    { name: "Ikat Handloom Kurti", price: 95, image: kurti3, type: "Kurti" },
-    { name: "Handloom Cotton Tote Bag", price: 45, image: bag1, type: "Bag" },
-    { name: "Ikat Handloom Shoulder Bag", price: 65, image: bag2, type: "Bag" },
-    { name: "Eco-Friendly Handloom Sling Bag", price: 55, image: bag3, type: "Bag" },
-    { name: "Handloom Cotton Scarf", price: 30, image: scarf1, type: "Scarf" },
-    { name: "Ikat Pattern Scarf", price: 45, image: scarf2, type: "Scarf" },
-    { name: "Organic Handwoven Scarf", price: 50, image: scarf3, type: "Scarf" },
-    { name: "Handloom Cotton Curtain", price: 80, image: curtain1, type: "Curtain" },
-    { name: "Ikat Handwoven Curtain", price: 120, image: curtain2, type: "Curtain" },
-    { name: "Eco-Friendly Designer Curtain", price: 150, image: curtain3, type: "Curtain" },
-    { name: "Handloom Wool Sweater", price: 110, image: sweater1, type: "Sweater" },
-    { name: "Organic Cotton Knit Sweater", price: 130, image: sweater2, type: "Sweater" },
-    { name: "Artisan Handwoven Winter Sweater", price: 150, image: sweater3, type: "Sweater" },
+    { name: "Handloom Cotton Kurti", price: 600, image: kurti1, type: "Kurti" },
+    { name: "Block Print Handloom Kurti", price: 750, image: kurti2, type: "Kurti" },
+    { name: "Ikat Handloom Kurti", price: 950, image: kurti3, type: "Kurti" },
+    { name: "Handloom Cotton Tote Bag", price: 4500, image: bag1, type: "Bag" },
+    { name: "Ikat Handloom Shoulder Bag", price: 6500, image: bag2, type: "Bag" },
+    { name: "Eco-Friendly Handloom Sling Bag", price: 5500, image: bag3, type: "Bag" },
+    { name: "Handloom Cotton Scarf", price: 3000, image: scarf1, type: "Scarf" },
+    { name: "Ikat Pattern Scarf", price: 4500, image: scarf2, type: "Scarf" },
+    { name: "Organic Handwoven Scarf", price: 5000, image: scarf3, type: "Scarf" },
+    { name: "Handloom Cotton Curtain", price: 800, image: curtain1, type: "Curtain" },
+    { name: "Ikat Handwoven Curtain", price: 1200, image: curtain2, type: "Curtain" },
+    { name: "Eco-Friendly Designer Curtain", price: 1500, image: curtain3, type: "Curtain" },
+    { name: "Handloom Wool Sweater", price: 1100, image: sweater1, type: "Sweater" },
+    { name: "Organic Cotton Knit Sweater", price: 1300, image: sweater2, type: "Sweater" },
+    { name: "Artisan Handwoven Winter Sweater", price: 1500, image: sweater3, type: "Sweater" },
     { name: "Handloom Cotton Diwan Set", price: 95, image: diwan, type: "Diwan" },
-    { name: "Ikat Handwoven Diwan Set", price: 140, image: diwan2, type: "Diwan" },
-    { name: "Premium Artisan Diwan Collection", price: 180, image: diwan3, type: "Diwan" },
-    { name: "Handloom Cotton Pillow Cover", price: 25, image: pillow1, type: "Pillow" },
-    { name: "Ikat Designer Pillow Cover", price: 35, image: pillow2, type: "Pillow" },
-    { name: "Eco-Friendly Artisan Pillow Cover", price: 45, image: pillow3, type: "Pillow" },
+    { name: "Ikat Handwoven Diwan Set", price: 1400, image: diwan2, type: "Diwan" },
+    { name: "Premium Artisan Diwan Collection", price: 1800, image: diwan3, type: "Diwan" },
+    { name: "Handloom Cotton Pillow Cover", price: 2500, image: pillow1, type: "Pillow" },
+    { name: "Ikat Designer Pillow Cover", price: 1200, image: pillow2, type: "Pillow" },
+    { name: "Eco-Friendly Artisan Pillow Cover", price: 450, image: pillow3, type: "Pillow" },
     { name: "Handloom Cotton Bedsheet", price: 120, image: bedsheet1, type: "Bedsheet" },
-    { name: "Ikat Designer Bedsheet Set", price: 160, image: bedsheet2, type: "Bedsheet" },
-    { name: "Premium Artisan Handwoven Bedsheet", price: 200, image: bedsheet3, type: "Bedsheet" },
-    { name: "Handloom Cotton Doti", price: 50, image: doti, type: "Doti" },
-    { name: "Traditional South Indian Doti", price: 75, image: doti2, type: "Doti" },
-    { name: "Premium Silk Wedding Doti", price: 120, image: doti3, type: "Doti" },
-    { name: "Handloom Cotton Men Kurti", price: 70, image: menkurti1, type: "Men Kurti" },
-    { name: "Traditional Handwoven Men Kurti", price: 95, image: menkurti2, type: "Men Kurti" },
-    { name: "Premium Festival Men Kurti", price: 120, image: menkurti3, type: "Men Kurti" },
-    { name: "Handloom Cotton Shirt", price: 60, image: shirt1, type: "Shirt" },
-    { name: "Ikat Handwoven Shirt", price: 85, image: shirt2, type: "Shirt" },
-    { name: "Premium Artisan Men's Shirt", price: 110, image: shirt3, type: "Shirt" },
+    { name: "Ikat Designer Bedsheet Set", price: 1600, image: bedsheet2, type: "Bedsheet" },
+    { name: "Premium Artisan Handwoven Bedsheet", price: 2000, image: bedsheet3, type: "Bedsheet" },
+    { name: "Handloom Cotton Doti", price: 5000, image: doti, type: "Doti" },
+    { name: "Traditional South Indian Doti", price: 705, image: doti2, type: "Doti" },
+    { name: "Premium Silk Wedding Doti", price: 10020, image: doti3, type: "Doti" },
+    { name: "Handloom Cotton Men Kurti", price: 7000, image: menkurti1, type: "Men Kurti" },
+    { name: "Traditional Handwoven Men Kurti", price: 955, image: menkurti2, type: "Men Kurti" },
+    { name: "Premium Festival Men Kurti", price: 1203, image: menkurti3, type: "Men Kurti" },
+    { name: "Handloom Cotton Shirt", price: 6000, image: shirt1, type: "Shirt" },
+    { name: "Ikat Handwoven Shirt", price: 850, image: shirt2, type: "Shirt" },
+    { name: "Premium Artisan Men's Shirt", price: 1100, image: shirt3, type: "Shirt" },
   ];
 
   const types = ["All", ...new Set(products.map(p => p.type))];
@@ -160,7 +158,10 @@ function Products({ addToCart, initialType = "All" }) {
               <img src={product.image} alt={product.name} style={{ width: "100%", height: "250px", objectFit: "cover" }} />
               <h3>{product.name}</h3>
               <p style={{ color: "red" }}>10% OFF</p>
-              <p><del>${product.price}</del> <strong>${finalPrice}</strong></p>
+              <p>
+                <del>₹{product.price}</del>{" "}
+                <strong>₹{finalPrice.toFixed(2)}</strong>
+              </p>
 
               <input
                 type="number"
