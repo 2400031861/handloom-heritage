@@ -11,11 +11,11 @@ import Customization from "./pages/Customization";
 import AdminDashboard from "./pages/AdminDashboard";
 import SellerDashboard from "./pages/SellerDashboard";
 import BuyerProducts from "./pages/BuyerProducts";
-import Signup from "./pages/Signup";
+import Register from "./pages/Register";
 
 function App() {
 
-  /* ================= SAFE USER STATE ================= */
+  /* ================= USER STATE ================= */
   const [user, setUser] = useState(() => {
     try {
       return localStorage.getItem("user") || "Guest";
@@ -28,8 +28,7 @@ function App() {
     localStorage.setItem("user", user);
   }, [user]);
 
-
-  /* ================= SAFE PRODUCTS STATE ================= */
+  /* ================= PRODUCTS ================= */
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem("products");
@@ -43,8 +42,7 @@ function App() {
     localStorage.setItem("products", JSON.stringify(products));
   }, [products]);
 
-
-  /* ================= SAFE CART STATE ================= */
+  /* ================= CART ================= */
   const [cartItems, setCartItems] = useState(() => {
     try {
       const saved = localStorage.getItem("cartItems");
@@ -58,6 +56,22 @@ function App() {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  /* ================= 🔵 BACKEND API CALL ================= */
+  useEffect(() => {
+    fetch("http://10.142.13.189:5000/api/data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: "Shars",
+        age: 21
+      })
+    })
+      .then(res => res.json())
+      .then(data => console.log("Backend Response:", data))
+      .catch(err => console.error("API Error:", err));
+  }, []);
 
   /* ================= CART FUNCTIONS ================= */
   const addToCart = (product) => {
@@ -75,15 +89,18 @@ function App() {
     setCartItems([]);
   };
 
+  /* ================= LOGOUT ================= */
+  const handleLogout = () => {
+    setUser("Guest");
+    localStorage.removeItem("user");
+  };
 
-  /* ================= NAV LINK STYLE ================= */
   const navLinkStyle = {
     margin: "0 15px",
     textDecoration: "none",
     color: "#333",
     fontWeight: "500",
   };
-
 
   return (
     <Router>
@@ -107,9 +124,17 @@ function App() {
               Welcome, <strong>{user}</strong>
             </span>
 
-            <Link to="/login" style={{ color: "white", marginRight: "20px" }}>
+            <Link to="/login" style={{ color: "white", marginRight: "10px" }}>
               Login
             </Link>
+
+            <Link to="/register" style={{ color: "white", marginRight: "10px" }}>
+              Register
+            </Link>
+
+            <button onClick={handleLogout} style={{ marginRight: "10px" }}>
+              Logout
+            </button>
 
             <Link to="/cart" style={{ color: "white" }}>
               🛒 Cart ({cartItems.length})
@@ -117,7 +142,7 @@ function App() {
           </div>
         </header>
 
-        {/* ================= NAVIGATION ================= */}
+        {/* ================= NAV ================= */}
         <nav
           style={{
             textAlign: "center",
@@ -138,19 +163,14 @@ function App() {
 
           <Route
             path="/products"
-            element={
-              <Products
-                products={products || []}
-                addToCart={addToCart}
-              />
-            }
+            element={<Products addToCart={addToCart} />}
           />
 
           <Route
             path="/cart"
             element={
               <Cart
-                cartItems={cartItems || []}
+                cartItems={cartItems}
                 removeFromCart={removeFromCart}
                 clearCart={clearCart}
               />
@@ -167,25 +187,25 @@ function App() {
           />
 
           <Route
-            path="/signup"
-            element={<Signup setUser={setUser} />}
+            path="/register"
+            element={<Register />}
           />
 
-         <Route
-  path="/admin-dashboard"
-  element={
-    <AdminDashboard
-      products={products}
-      setProducts={setProducts}
-    />
-  }
-/>
+          <Route
+            path="/admin-dashboard"
+            element={
+              <AdminDashboard
+                products={products}
+                setProducts={setProducts}
+              />
+            }
+          />
 
           <Route
             path="/seller-dashboard"
             element={
               <SellerDashboard
-                products={products || []}
+                products={products}
                 setProducts={setProducts}
               />
             }
@@ -195,7 +215,7 @@ function App() {
             path="/buyer-products"
             element={
               <BuyerProducts
-                products={products || []}
+                products={products}
                 addToCart={addToCart}
               />
             }

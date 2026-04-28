@@ -24,6 +24,7 @@ function Signup({ setUser }) {
   /* ================= HANDLE INPUT ================= */
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError(""); // ✅ clears error while typing
   };
 
   /* ================= EMAIL VALIDATION ================= */
@@ -86,11 +87,20 @@ function Signup({ setUser }) {
 
     setError("");
 
+    // ✅ SAVE USER (SESSION MANAGEMENT)
+    const userData = {
+      name: form.name,
+      email: form.email,
+      role: role
+    };
+
+    localStorage.setItem("user", JSON.stringify(userData));
+
     setUser(`${role} (${form.name})`);
 
     alert(`Account created successfully as ${role}`);
 
-    /* ✅ CORRECT ROLE-BASED REDIRECT */
+    /* ✅ ROLE-BASED REDIRECT */
     if (role === "Admin") {
       navigate("/admin-dashboard");
     } 
@@ -124,36 +134,13 @@ function Signup({ setUser }) {
           ))}
         </div>
 
-        <input
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          style={inputStyle}
-        />
+        <input name="name" placeholder="Name" onChange={handleChange} style={inputStyle} />
 
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          onChange={handleChange}
-          style={inputStyle}
-        />
+        <input name="email" type="email" placeholder="Email" onChange={handleChange} style={inputStyle} />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-          style={inputStyle}
-        />
+        <input name="password" type="password" placeholder="Password" onChange={handleChange} style={inputStyle} />
 
-        <input
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm Password"
-          onChange={handleChange}
-          style={inputStyle}
-        />
+        <input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} style={inputStyle} />
 
         {!otpSent && (
           <button onClick={sendOtp} style={buttonStyle}>
@@ -163,12 +150,7 @@ function Signup({ setUser }) {
 
         {otpSent && !otpVerified && (
           <>
-            <input
-              name="otp"
-              placeholder="Enter OTP"
-              onChange={handleChange}
-              style={inputStyle}
-            />
+            <input name="otp" placeholder="Enter OTP" onChange={handleChange} style={inputStyle} />
             <button onClick={verifyOtp} style={buttonStyle}>
               Verify OTP
             </button>
@@ -195,7 +177,12 @@ function Signup({ setUser }) {
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <button onClick={handleSignup} style={buttonStyle}>
+        {/* ✅ DISABLED UNTIL VALID */}
+        <button 
+          onClick={handleSignup} 
+          style={buttonStyle}
+          disabled={!captchaChecked || !otpVerified}
+        >
           Create Account
         </button>
       </div>
